@@ -1,0 +1,19 @@
+--- # Bootstrap Webservers
+- hosts: webservers
+  become: yes
+  tasks:
+  - debug:
+      var: target_service
+  - name: get stuff from git
+    git:
+      repo: git@github.com/aokugel/Django-Blog-Website.git
+      dest: /home/ubuntu/projects/mysite
+      clone: no
+  - name: cycle gunicorn
+    service:
+      name: gunicorn
+      state: restarted
+  - name: cycle nginx
+    service:
+      name: nginx
+      state: restarted
