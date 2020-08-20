@@ -1,2 +1,2 @@
 [webservers]
-djangonginx01 ec2-3-129-126-184.us-east-2.compute.amazonaws.com
+djangonginx01 ansible_host=ec2-3-129-126-184.us-east-2.compute.amazonaws.com
