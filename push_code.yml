@@ -14,6 +14,15 @@
          command: makemigrations
          app_path: /home/ubuntu/projects/mysite
          virtualenv: /home/ubuntu/projects/django_venv
+       when: run_django_db_migrations is defined and run_django_db_migrations
+       tags: django.migrate
+     - name: run migrate
+       django_manage:
+         command: migrate
+         app_path: /home/ubuntu/projects/mysite
+         virtualenv: /home/ubuntu/projects/django_venv
+       when: run_django_db_migrations is defined and run_django_db_migrations
+       tags: django.migrate
     become: true
     become_user: ubuntu
   - name: cycle services
