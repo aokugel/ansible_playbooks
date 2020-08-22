@@ -9,6 +9,11 @@
          dest: /home/ubuntu/projects/mysite
          clone: no
          update: yes
+     - name: run makemigrations
+       django_manage:
+         command: makemigrations
+         app_path: /home/ubuntu/projects/mysite
+         virtualenv: /home/ubuntu/projects/django_venv
     become: true
     become_user: ubuntu
   - name: cycle services
