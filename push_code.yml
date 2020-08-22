@@ -27,6 +27,11 @@
     become_user: ubuntu
   - name: cycle services
     block:
+    - name: run collectstic
+      django_manage:
+        command: collectstatic
+        app_path: /home/ubuntu/projects/mysite
+        virtualenv: /home/ubuntu/projects/django_venv
     - name: cycle gunicorn
       service:
         name: gunicorn
