@@ -24,7 +24,7 @@
          virtualenv: /home/ubuntu/projects/django_venv
        when: run_django_db_migrations is defined and run_django_db_migrations
        tags: django.migrate
-    become: true
+    become: yes
     become_user: ubuntu
   - name: cycle services
     block:
@@ -43,4 +43,4 @@
         name: nginx
         state: restarted
       listen: "cycle services"
-    become: true
+    become: yes
