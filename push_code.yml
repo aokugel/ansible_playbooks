@@ -9,6 +9,7 @@
          dest: /home/ubuntu/projects/mysite
          clone: no
          update: yes
+       notify: cycle services
      - name: run makemigrations
        django_manage:
          command: makemigrations
@@ -36,8 +37,10 @@
       service:
         name: gunicorn
         state: restarted
+      listen: "cycle services"
     - name: cycle nginx
       service:
         name: nginx
         state: restarted
+      listen: "cycle services"
     become: true
