@@ -9,22 +9,22 @@
     block:
      - name: get stuff from git
        git:
-         repo: {{ github_repo }}
-         dest: {{ app_directory }}
+         repo: "{{ github_repo }}"
+         dest: "{{ app_directory }}"
          clone: no
          update: yes
      - name: run makemigrations
        django_manage:
          command: makemigrations
-         app_path: {{ app_directory }}
-         virtualenv: {{ virtualenv }}
+         app_path: "{{ app_directory }}"
+         virtualenv: "{{ virtualenv }}"
        when: run_django_db_migrations is defined and run_django_db_migrations
        tags: django.migrate
      - name: run migrate
        django_manage:
          command: migrate
-         app_path: {{ app_directory }}
-         virtualenv: {{ virtualenv }}
+         app_path: "{{ app_directory }}"
+         virtualenv: "{{ virtualenv }}"
        when: run_django_db_migrations is defined and run_django_db_migrations
        tags: django.migrate
     become: yes
@@ -34,8 +34,8 @@
     - name: run collectstic
       django_manage:
         command: collectstatic
-        app_path: {{ app_directory }}
-        virtualenv: {{ virtualenv }}
+        app_path: "{{ app_directory }}"
+        virtualenv: "{{ virtualenv }}"
     - name: cycle gunicorn
       service:
         name: gunicorn
