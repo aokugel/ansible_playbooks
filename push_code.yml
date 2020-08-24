@@ -1,26 +1,30 @@
 --- # Bootstrap Webservers
 - hosts: webservers
+  vars:
+    github_repo: https://github.com/aokugel/Django-Blog-Website.git
+    app_directory: /home/ubuntu/projects/mysite
+    virtualenv: /home/ubuntu/projects/django_venv
   tasks:
   - name: Git pull from remote repo
     block:
      - name: get stuff from git
        git:
-         repo: https://github.com/aokugel/Django-Blog-Website.git
-         dest: /home/ubuntu/projects/mysite
+         repo: {{ github_repo }}
+         dest: {{ app_directory }}
          clone: no
          update: yes
      - name: run makemigrations
        django_manage:
          command: makemigrations
-         app_path: /home/ubuntu/projects/mysite
-         virtualenv: /home/ubuntu/projects/django_venv
+         app_path: {{ app_directory }}
+         virtualenv: {{ virtualenv }}
        when: run_django_db_migrations is defined and run_django_db_migrations
        tags: django.migrate
      - name: run migrate
        django_manage:
          command: migrate
-         app_path: /home/ubuntu/projects/mysite
-         virtualenv: /home/ubuntu/projects/django_venv
+         app_path: {{ app_directory }}
+         virtualenv: {{ virtualenv }}
        when: run_django_db_migrations is defined and run_django_db_migrations
        tags: django.migrate
     become: yes
@@ -30,8 +34,8 @@
     - name: run collectstic
       django_manage:
         command: collectstatic
-        app_path: /home/ubuntu/projects/mysite
-        virtualenv: /home/ubuntu/projects/django_venv
+        app_path: {{ app_directory }}
+        virtualenv: {{ virtualenv }}
     - name: cycle gunicorn
       service:
         name: gunicorn
